@@ -329,7 +329,7 @@ namespace WebApiNinjectStudio.Domain.Migrations
                             BusModelID = 5,
                             CapacityBoundary = 50,
                             IsDeleted = false,
-                            RegistrationNumber = "MD21233",
+                            RegistrationNumber = "AD32343",
                             SeatingPlace = 40,
                             StandingPlace = 50
                         },
@@ -2386,8 +2386,10 @@ namespace WebApiNinjectStudio.Domain.Migrations
 
             modelBuilder.Entity("WebApiNinjectStudio.Domain.Entities.RouteBusStop", b =>
                 {
-                    b.Property<int>("RouteID")
-                        .HasColumnType("int");
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<int>("BusStopID")
                         .HasColumnType("int");
@@ -2398,670 +2400,769 @@ namespace WebApiNinjectStudio.Domain.Migrations
                     b.Property<int>("Order")
                         .HasColumnType("int");
 
-                    b.HasKey("RouteID", "BusStopID");
+                    b.Property<int>("RouteID")
+                        .HasColumnType("int");
+
+                    b.HasKey("ID");
 
                     b.HasIndex("BusStopID");
+
+                    b.HasIndex("RouteID");
 
                     b.ToTable("RouteBusStops");
 
                     b.HasData(
                         new
                         {
-                            RouteID = 5,
+                            ID = 1,
                             BusStopID = 63,
                             IsDeleted = false,
-                            Order = 1
+                            Order = 1,
+                            RouteID = 5
                         },
                         new
                         {
-                            RouteID = 5,
+                            ID = 2,
                             BusStopID = 64,
                             IsDeleted = false,
-                            Order = 2
+                            Order = 2,
+                            RouteID = 5
                         },
                         new
                         {
-                            RouteID = 5,
+                            ID = 3,
                             BusStopID = 65,
                             IsDeleted = false,
-                            Order = 3
+                            Order = 3,
+                            RouteID = 5
                         },
                         new
                         {
-                            RouteID = 5,
+                            ID = 4,
                             BusStopID = 66,
                             IsDeleted = false,
-                            Order = 4
+                            Order = 4,
+                            RouteID = 5
                         },
                         new
                         {
-                            RouteID = 5,
+                            ID = 5,
                             BusStopID = 67,
                             IsDeleted = false,
-                            Order = 5
+                            Order = 5,
+                            RouteID = 5
                         },
                         new
                         {
-                            RouteID = 5,
+                            ID = 6,
                             BusStopID = 68,
                             IsDeleted = false,
-                            Order = 6
+                            Order = 6,
+                            RouteID = 5
                         },
                         new
                         {
-                            RouteID = 5,
+                            ID = 7,
                             BusStopID = 69,
                             IsDeleted = false,
-                            Order = 7
+                            Order = 7,
+                            RouteID = 5
                         },
                         new
                         {
-                            RouteID = 5,
+                            ID = 8,
                             BusStopID = 70,
                             IsDeleted = false,
-                            Order = 8
+                            Order = 8,
+                            RouteID = 5
                         },
                         new
                         {
-                            RouteID = 5,
+                            ID = 9,
                             BusStopID = 71,
                             IsDeleted = false,
-                            Order = 9
+                            Order = 9,
+                            RouteID = 5
                         },
                         new
                         {
-                            RouteID = 5,
+                            ID = 10,
                             BusStopID = 72,
                             IsDeleted = false,
-                            Order = 10
+                            Order = 10,
+                            RouteID = 5
                         },
                         new
                         {
-                            RouteID = 5,
+                            ID = 11,
                             BusStopID = 73,
                             IsDeleted = false,
-                            Order = 11
+                            Order = 11,
+                            RouteID = 5
                         },
                         new
                         {
-                            RouteID = 5,
+                            ID = 12,
                             BusStopID = 74,
                             IsDeleted = false,
-                            Order = 12
+                            Order = 12,
+                            RouteID = 5
                         },
                         new
                         {
-                            RouteID = 5,
+                            ID = 13,
                             BusStopID = 75,
                             IsDeleted = false,
-                            Order = 13
+                            Order = 13,
+                            RouteID = 5
                         },
                         new
                         {
-                            RouteID = 5,
+                            ID = 14,
                             BusStopID = 76,
                             IsDeleted = false,
-                            Order = 14
+                            Order = 14,
+                            RouteID = 5
                         },
                         new
                         {
-                            RouteID = 5,
+                            ID = 15,
                             BusStopID = 77,
                             IsDeleted = false,
-                            Order = 15
+                            Order = 15,
+                            RouteID = 5
                         },
                         new
                         {
-                            RouteID = 6,
+                            ID = 16,
                             BusStopID = 78,
                             IsDeleted = false,
-                            Order = 1
+                            Order = 1,
+                            RouteID = 6
                         },
                         new
                         {
-                            RouteID = 6,
+                            ID = 17,
                             BusStopID = 79,
                             IsDeleted = false,
-                            Order = 2
+                            Order = 2,
+                            RouteID = 6
                         },
                         new
                         {
-                            RouteID = 6,
+                            ID = 18,
                             BusStopID = 80,
                             IsDeleted = false,
-                            Order = 3
+                            Order = 3,
+                            RouteID = 6
                         },
                         new
                         {
-                            RouteID = 6,
+                            ID = 19,
                             BusStopID = 81,
                             IsDeleted = false,
-                            Order = 4
+                            Order = 4,
+                            RouteID = 6
                         },
                         new
                         {
-                            RouteID = 6,
+                            ID = 20,
                             BusStopID = 82,
                             IsDeleted = false,
-                            Order = 5
+                            Order = 5,
+                            RouteID = 6
                         },
                         new
                         {
-                            RouteID = 6,
+                            ID = 21,
                             BusStopID = 83,
                             IsDeleted = false,
-                            Order = 6
+                            Order = 6,
+                            RouteID = 6
                         },
                         new
                         {
-                            RouteID = 6,
+                            ID = 22,
                             BusStopID = 84,
                             IsDeleted = false,
-                            Order = 7
+                            Order = 7,
+                            RouteID = 6
                         },
                         new
                         {
-                            RouteID = 6,
+                            ID = 23,
                             BusStopID = 85,
                             IsDeleted = false,
-                            Order = 8
+                            Order = 8,
+                            RouteID = 6
                         },
                         new
                         {
-                            RouteID = 6,
+                            ID = 24,
                             BusStopID = 86,
                             IsDeleted = false,
-                            Order = 9
+                            Order = 9,
+                            RouteID = 6
                         },
                         new
                         {
-                            RouteID = 6,
+                            ID = 25,
                             BusStopID = 87,
                             IsDeleted = false,
-                            Order = 10
+                            Order = 10,
+                            RouteID = 6
                         },
                         new
                         {
-                            RouteID = 6,
+                            ID = 26,
                             BusStopID = 88,
                             IsDeleted = false,
-                            Order = 11
+                            Order = 11,
+                            RouteID = 6
                         },
                         new
                         {
-                            RouteID = 6,
+                            ID = 27,
                             BusStopID = 89,
                             IsDeleted = false,
-                            Order = 12
+                            Order = 12,
+                            RouteID = 6
                         },
                         new
                         {
-                            RouteID = 6,
+                            ID = 28,
                             BusStopID = 90,
                             IsDeleted = false,
-                            Order = 13
+                            Order = 13,
+                            RouteID = 6
                         },
                         new
                         {
-                            RouteID = 6,
+                            ID = 29,
                             BusStopID = 91,
                             IsDeleted = false,
-                            Order = 14
+                            Order = 14,
+                            RouteID = 6
                         },
                         new
                         {
-                            RouteID = 6,
+                            ID = 30,
                             BusStopID = 92,
                             IsDeleted = false,
-                            Order = 15
+                            Order = 15,
+                            RouteID = 6
                         },
                         new
                         {
-                            RouteID = 1,
+                            ID = 31,
                             BusStopID = 1,
                             IsDeleted = false,
-                            Order = 1
+                            Order = 1,
+                            RouteID = 1
                         },
                         new
                         {
-                            RouteID = 1,
+                            ID = 32,
                             BusStopID = 2,
                             IsDeleted = false,
-                            Order = 2
+                            Order = 2,
+                            RouteID = 1
                         },
                         new
                         {
-                            RouteID = 1,
+                            ID = 33,
                             BusStopID = 3,
                             IsDeleted = false,
-                            Order = 3
+                            Order = 3,
+                            RouteID = 1
                         },
                         new
                         {
-                            RouteID = 1,
+                            ID = 34,
                             BusStopID = 4,
                             IsDeleted = false,
-                            Order = 4
+                            Order = 4,
+                            RouteID = 1
                         },
                         new
                         {
-                            RouteID = 1,
+                            ID = 35,
                             BusStopID = 5,
                             IsDeleted = false,
-                            Order = 5
+                            Order = 5,
+                            RouteID = 1
                         },
                         new
                         {
-                            RouteID = 1,
+                            ID = 36,
                             BusStopID = 6,
                             IsDeleted = false,
-                            Order = 6
+                            Order = 6,
+                            RouteID = 1
                         },
                         new
                         {
-                            RouteID = 1,
+                            ID = 37,
                             BusStopID = 7,
                             IsDeleted = false,
-                            Order = 7
+                            Order = 7,
+                            RouteID = 1
                         },
                         new
                         {
-                            RouteID = 1,
+                            ID = 38,
                             BusStopID = 8,
                             IsDeleted = false,
-                            Order = 8
+                            Order = 8,
+                            RouteID = 1
                         },
                         new
                         {
-                            RouteID = 1,
+                            ID = 39,
                             BusStopID = 9,
                             IsDeleted = false,
-                            Order = 9
+                            Order = 9,
+                            RouteID = 1
                         },
                         new
                         {
-                            RouteID = 1,
+                            ID = 40,
                             BusStopID = 10,
                             IsDeleted = false,
-                            Order = 10
+                            Order = 10,
+                            RouteID = 1
                         },
                         new
                         {
-                            RouteID = 1,
+                            ID = 41,
                             BusStopID = 11,
                             IsDeleted = false,
-                            Order = 11
+                            Order = 11,
+                            RouteID = 1
                         },
                         new
                         {
-                            RouteID = 1,
+                            ID = 42,
                             BusStopID = 12,
                             IsDeleted = false,
-                            Order = 12
+                            Order = 12,
+                            RouteID = 1
                         },
                         new
                         {
-                            RouteID = 1,
+                            ID = 43,
                             BusStopID = 13,
                             IsDeleted = false,
-                            Order = 13
+                            Order = 13,
+                            RouteID = 1
                         },
                         new
                         {
-                            RouteID = 1,
+                            ID = 44,
                             BusStopID = 14,
                             IsDeleted = false,
-                            Order = 14
+                            Order = 14,
+                            RouteID = 1
                         },
                         new
                         {
-                            RouteID = 1,
+                            ID = 45,
                             BusStopID = 15,
                             IsDeleted = false,
-                            Order = 15
+                            Order = 15,
+                            RouteID = 1
                         },
                         new
                         {
-                            RouteID = 1,
+                            ID = 46,
                             BusStopID = 16,
                             IsDeleted = false,
-                            Order = 16
+                            Order = 16,
+                            RouteID = 1
                         },
                         new
                         {
-                            RouteID = 1,
+                            ID = 47,
                             BusStopID = 17,
                             IsDeleted = false,
-                            Order = 17
+                            Order = 17,
+                            RouteID = 1
                         },
                         new
                         {
-                            RouteID = 1,
+                            ID = 48,
                             BusStopID = 18,
                             IsDeleted = false,
-                            Order = 18
+                            Order = 18,
+                            RouteID = 1
                         },
                         new
                         {
-                            RouteID = 1,
+                            ID = 49,
                             BusStopID = 19,
                             IsDeleted = false,
-                            Order = 19
+                            Order = 19,
+                            RouteID = 1
                         },
                         new
                         {
-                            RouteID = 2,
+                            ID = 50,
                             BusStopID = 19,
                             IsDeleted = false,
-                            Order = 1
+                            Order = 1,
+                            RouteID = 2
                         },
                         new
                         {
-                            RouteID = 2,
+                            ID = 51,
                             BusStopID = 20,
                             IsDeleted = false,
-                            Order = 2
+                            Order = 2,
+                            RouteID = 2
                         },
                         new
                         {
-                            RouteID = 2,
+                            ID = 52,
                             BusStopID = 21,
                             IsDeleted = false,
-                            Order = 3
+                            Order = 3,
+                            RouteID = 2
                         },
                         new
                         {
-                            RouteID = 2,
+                            ID = 53,
                             BusStopID = 22,
                             IsDeleted = false,
-                            Order = 4
+                            Order = 4,
+                            RouteID = 2
                         },
                         new
                         {
-                            RouteID = 2,
+                            ID = 54,
                             BusStopID = 23,
                             IsDeleted = false,
-                            Order = 5
+                            Order = 5,
+                            RouteID = 2
                         },
                         new
                         {
-                            RouteID = 2,
+                            ID = 55,
                             BusStopID = 24,
                             IsDeleted = false,
-                            Order = 6
+                            Order = 6,
+                            RouteID = 2
                         },
                         new
                         {
-                            RouteID = 2,
+                            ID = 56,
                             BusStopID = 25,
                             IsDeleted = false,
-                            Order = 7
+                            Order = 7,
+                            RouteID = 2
                         },
                         new
                         {
-                            RouteID = 2,
+                            ID = 57,
                             BusStopID = 26,
                             IsDeleted = false,
-                            Order = 8
+                            Order = 8,
+                            RouteID = 2
                         },
                         new
                         {
-                            RouteID = 2,
+                            ID = 58,
                             BusStopID = 27,
                             IsDeleted = false,
-                            Order = 9
+                            Order = 9,
+                            RouteID = 2
                         },
                         new
                         {
-                            RouteID = 2,
+                            ID = 59,
                             BusStopID = 28,
                             IsDeleted = false,
-                            Order = 10
+                            Order = 10,
+                            RouteID = 2
                         },
                         new
                         {
-                            RouteID = 2,
+                            ID = 60,
                             BusStopID = 29,
                             IsDeleted = false,
-                            Order = 11
+                            Order = 11,
+                            RouteID = 2
                         },
                         new
                         {
-                            RouteID = 2,
+                            ID = 61,
                             BusStopID = 30,
                             IsDeleted = false,
-                            Order = 12
+                            Order = 12,
+                            RouteID = 2
                         },
                         new
                         {
-                            RouteID = 2,
+                            ID = 62,
                             BusStopID = 31,
                             IsDeleted = false,
-                            Order = 13
+                            Order = 13,
+                            RouteID = 2
                         },
                         new
                         {
-                            RouteID = 2,
+                            ID = 63,
                             BusStopID = 32,
                             IsDeleted = false,
-                            Order = 14
+                            Order = 14,
+                            RouteID = 2
                         },
                         new
                         {
-                            RouteID = 2,
+                            ID = 64,
                             BusStopID = 33,
                             IsDeleted = false,
-                            Order = 15
+                            Order = 15,
+                            RouteID = 2
                         },
                         new
                         {
-                            RouteID = 2,
+                            ID = 65,
                             BusStopID = 34,
                             IsDeleted = false,
-                            Order = 16
+                            Order = 16,
+                            RouteID = 2
                         },
                         new
                         {
-                            RouteID = 2,
+                            ID = 66,
                             BusStopID = 35,
                             IsDeleted = false,
-                            Order = 17
+                            Order = 17,
+                            RouteID = 2
                         },
                         new
                         {
-                            RouteID = 2,
+                            ID = 67,
                             BusStopID = 36,
                             IsDeleted = false,
-                            Order = 18
+                            Order = 18,
+                            RouteID = 2
                         },
                         new
                         {
-                            RouteID = 2,
+                            ID = 68,
                             BusStopID = 37,
                             IsDeleted = false,
-                            Order = 19
+                            Order = 19,
+                            RouteID = 2
                         },
                         new
                         {
-                            RouteID = 3,
+                            ID = 69,
                             BusStopID = 38,
                             IsDeleted = false,
-                            Order = 1
+                            Order = 1,
+                            RouteID = 3
                         },
                         new
                         {
-                            RouteID = 3,
+                            ID = 70,
                             BusStopID = 39,
                             IsDeleted = false,
-                            Order = 2
+                            Order = 2,
+                            RouteID = 3
                         },
                         new
                         {
-                            RouteID = 3,
+                            ID = 71,
                             BusStopID = 40,
                             IsDeleted = false,
-                            Order = 3
+                            Order = 3,
+                            RouteID = 3
                         },
                         new
                         {
-                            RouteID = 3,
+                            ID = 72,
                             BusStopID = 41,
                             IsDeleted = false,
-                            Order = 4
+                            Order = 4,
+                            RouteID = 3
                         },
                         new
                         {
-                            RouteID = 3,
+                            ID = 73,
                             BusStopID = 42,
                             IsDeleted = false,
-                            Order = 5
+                            Order = 5,
+                            RouteID = 3
                         },
                         new
                         {
-                            RouteID = 3,
+                            ID = 74,
                             BusStopID = 43,
                             IsDeleted = false,
-                            Order = 6
+                            Order = 6,
+                            RouteID = 3
                         },
                         new
                         {
-                            RouteID = 3,
+                            ID = 75,
                             BusStopID = 44,
                             IsDeleted = false,
-                            Order = 7
+                            Order = 7,
+                            RouteID = 3
                         },
                         new
                         {
-                            RouteID = 3,
+                            ID = 76,
                             BusStopID = 45,
                             IsDeleted = false,
-                            Order = 8
+                            Order = 8,
+                            RouteID = 3
                         },
                         new
                         {
-                            RouteID = 3,
+                            ID = 77,
                             BusStopID = 46,
                             IsDeleted = false,
-                            Order = 9
+                            Order = 9,
+                            RouteID = 3
                         },
                         new
                         {
-                            RouteID = 3,
+                            ID = 78,
                             BusStopID = 47,
                             IsDeleted = false,
-                            Order = 10
+                            Order = 10,
+                            RouteID = 3
                         },
                         new
                         {
-                            RouteID = 3,
+                            ID = 79,
                             BusStopID = 48,
                             IsDeleted = false,
-                            Order = 11
+                            Order = 11,
+                            RouteID = 3
                         },
                         new
                         {
-                            RouteID = 3,
+                            ID = 80,
                             BusStopID = 49,
                             IsDeleted = false,
-                            Order = 12
+                            Order = 12,
+                            RouteID = 3
                         },
                         new
                         {
-                            RouteID = 3,
+                            ID = 81,
                             BusStopID = 50,
                             IsDeleted = false,
-                            Order = 13
+                            Order = 13,
+                            RouteID = 3
                         },
                         new
                         {
-                            RouteID = 4,
+                            ID = 82,
                             BusStopID = 50,
                             IsDeleted = false,
-                            Order = 1
+                            Order = 1,
+                            RouteID = 4
                         },
                         new
                         {
-                            RouteID = 4,
+                            ID = 83,
                             BusStopID = 51,
                             IsDeleted = false,
-                            Order = 2
+                            Order = 2,
+                            RouteID = 4
                         },
                         new
                         {
-                            RouteID = 4,
+                            ID = 84,
                             BusStopID = 52,
                             IsDeleted = false,
-                            Order = 3
+                            Order = 3,
+                            RouteID = 4
                         },
                         new
                         {
-                            RouteID = 4,
+                            ID = 85,
                             BusStopID = 53,
                             IsDeleted = false,
-                            Order = 4
+                            Order = 4,
+                            RouteID = 4
                         },
                         new
                         {
-                            RouteID = 4,
+                            ID = 86,
                             BusStopID = 54,
                             IsDeleted = false,
-                            Order = 5
+                            Order = 5,
+                            RouteID = 4
                         },
                         new
                         {
-                            RouteID = 4,
+                            ID = 87,
                             BusStopID = 55,
                             IsDeleted = false,
-                            Order = 6
+                            Order = 6,
+                            RouteID = 4
                         },
                         new
                         {
-                            RouteID = 4,
+                            ID = 88,
                             BusStopID = 56,
                             IsDeleted = false,
-                            Order = 7
+                            Order = 7,
+                            RouteID = 4
                         },
                         new
                         {
-                            RouteID = 4,
+                            ID = 89,
                             BusStopID = 57,
                             IsDeleted = false,
-                            Order = 8
+                            Order = 8,
+                            RouteID = 4
                         },
                         new
                         {
-                            RouteID = 4,
+                            ID = 90,
                             BusStopID = 58,
                             IsDeleted = false,
-                            Order = 9
+                            Order = 9,
+                            RouteID = 4
                         },
                         new
                         {
-                            RouteID = 4,
+                            ID = 91,
                             BusStopID = 59,
                             IsDeleted = false,
-                            Order = 10
+                            Order = 10,
+                            RouteID = 4
                         },
                         new
                         {
-                            RouteID = 4,
+                            ID = 92,
                             BusStopID = 60,
                             IsDeleted = false,
-                            Order = 11
+                            Order = 11,
+                            RouteID = 4
                         },
                         new
                         {
-                            RouteID = 4,
+                            ID = 93,
                             BusStopID = 61,
                             IsDeleted = false,
-                            Order = 12
+                            Order = 12,
+                            RouteID = 4
                         },
                         new
                         {
-                            RouteID = 4,
+                            ID = 94,
                             BusStopID = 62,
                             IsDeleted = false,
-                            Order = 13
+                            Order = 13,
+                            RouteID = 4
                         });
                 });
 
