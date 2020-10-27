@@ -24,13 +24,15 @@ namespace WebApiNinjectStudio.V1.Controllers
     public class RoutesController : ControllerBase
     {
         private readonly IRouteRepository _RouteRepository;
+        private readonly IBusStopRepository _BusStopRepository;
         private readonly IRouteBusStopRepository _RouteBusStopRepository;
         private readonly IMapper _Mapper;
 
-        public RoutesController(IRouteRepository routeRepository, IRouteBusStopRepository routeBusStopRepository, IMapper mapper)
+        public RoutesController(IRouteRepository routeRepository, IRouteBusStopRepository routeBusStopRepository, IBusStopRepository busStopRepository, IMapper mapper)
         {
             this._RouteRepository = routeRepository;
             this._RouteBusStopRepository = routeBusStopRepository;
+            this._BusStopRepository = busStopRepository;
             this._Mapper = mapper;
         }
 
@@ -44,7 +46,6 @@ namespace WebApiNinjectStudio.V1.Controllers
         [ProducesResponseType(typeof(List<ReturnRouteDto>), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(BadRequestMessage), StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        [Route("routes")]
         public IActionResult GetRoutes()
         {
             try
@@ -59,14 +60,101 @@ namespace WebApiNinjectStudio.V1.Controllers
             }
         }
 
-        // GET: api/v1/Routes/1/BusStops
+        // GET: api/v1/Routes/1
         /// <summary>
-        /// Get all busstops of a route by id of route;
+        /// Get a route by id;
         /// </summary>
         /// <param name="routeId">The id of a route</param>
         [HttpGet]
         [AllowAnonymous]
-        [ProducesResponseType(typeof(List<BusStopDto>), StatusCodes.Status200OK)]
+        [Produces("application/json")]
+        [ProducesResponseType(typeof(ReturnRouteDto), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(BadRequestMessage), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [Route("{routeId}")]
+        public IActionResult GetRouteById(int routeId)
+        {
+            try
+            {
+                var route = this._RouteRepository.Routes.FirstOrDefault(c => c.ID == routeId);
+                if (route == null)
+                {
+                    return BadRequest(new BadRequestMessage
+                    {
+                        Message = new string[] {"Find not route."}
+                    });
+                }
+                return Ok(
+                    this._Mapper.Map<Route, ReturnRouteDto>(route)
+                    );
+            }
+            catch (Exception)
+            {
+                return StatusCode(500, "Internal server error");
+            }
+        }
+
+        // POST: /​api​/v1​/Routes​/
+        /// <summary>
+        /// Create a route 
+        /// </summary>
+        /// <param name="createRouteDto">Object route</param>
+        [HttpPost]
+        [AllowAnonymous]
+        [Produces("application/json")]
+        [ProducesResponseType(typeof(ReturnRouteDto), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(BadRequestMessage), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public IActionResult Post([FromBody] CreateRouteDto createRouteDto)
+        {
+            try
+            {
+                //Is already exist
+                if (this._RouteRepository.Routes
+                    .Where(
+                        o => o.Label.Trim().ToLower() == createRouteDto.Label.Trim().ToLower() &&
+                        o.Description.Trim().ToLower() == createRouteDto.Description.Trim().ToLower())
+                    .Any())
+                {
+                    return BadRequest(new BadRequestMessage
+                    {
+                        Message = new string[] {
+                        "Route is already exists.",
+                        "Tip: Label and Description is exactly the same as the existing route"
+                        }
+                    });
+                }
+
+                var newRoute = this._Mapper.Map<CreateRouteDto, Route>(createRouteDto);
+                if (this._RouteRepository.SaveRoute(newRoute) > 0)
+                {
+                    return Ok(
+                        this._Mapper.Map<Route, ReturnRouteDto>(newRoute)
+                        );
+                }
+                else
+                {
+                    return BadRequest(new BadRequestMessage
+                    {
+                        Message = new string[] {
+                        "Route fails to create."}
+                    });
+                }
+            }
+            catch (Exception)
+            {
+                return StatusCode(500, "Internal server error");
+            }
+        }
+
+        // GET: api/v1/Routes/1/BusStops
+        /// <summary>
+        /// Get all bus stops of a route by id;
+        /// </summary>
+        /// <param name="routeId">The id of a route</param>
+        [HttpGet]
+        [AllowAnonymous]
+        [ProducesResponseType(typeof(List<ReturnBusStopWithOrderDto>), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(BadRequestMessage), StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [Route("routes/{routeId}/BusStops")]
@@ -87,12 +175,12 @@ namespace WebApiNinjectStudio.V1.Controllers
                 }
                 var routeBusStopItems = this._RouteBusStopRepository.RouteBusStops
                     .Where(o => o.RouteID == routeId)
-                    .OrderByDescending(o => o.Order)
-                    .Select(o => o.BusStop)
+                    .OrderBy(o => o.Order)
+                    //.Select(o => o.BusStop)
                     .ToList();
 
                 return Ok(
-                    this._Mapper.Map<List<BusStop>, List<ReturnBusStopDto>>(routeBusStopItems)
+                    this._Mapper.Map<List<RouteBusStop>, List<ReturnBusStopWithOrderDto>>(routeBusStopItems)
                     );
                 
             }
@@ -104,18 +192,35 @@ namespace WebApiNinjectStudio.V1.Controllers
 
         // POST: api/v1/Routes/1/BusStops/1
         /// <summary>
-        /// Add a busstop to a route;
+        /// Add a bus stop to a route;
         /// </summary>
         /// <param name="routeId">The id of a route</param>
         /// <param name="busStopId">The id of a stop</param>
         [HttpPost]
         [AllowAnonymous]
+        [ProducesResponseType(typeof(bool), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(BadRequestMessage), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [Route("routes/{routeId}/BusStops/{busStopId}")]
         public IActionResult PostAddBusStopToRoute(int routeId, int busStopId)
         {
             try
-            {
-                return Ok();
+            {            
+
+                var newRouteBusStop = new RouteBusStop { BusStopID = busStopId, RouteID = routeId, Order = 0};
+                if (this._RouteBusStopRepository.SaveRouteBusStop(newRouteBusStop) > 0)
+                {
+                    return Ok(true);
+                }
+                return BadRequest(new BadRequestMessage
+                {
+                    Message = new string[] {
+                        "The bus stop fails to add to the route.",
+                        "Tip: The bus stop is already in the route.",
+                        "The bus must already exist.",
+                        "The route must already exist."
+                        }
+                });
             }
             catch (Exception)
             {
@@ -123,20 +228,71 @@ namespace WebApiNinjectStudio.V1.Controllers
             }
         }
 
-        // HttpDelete: api/v1/Routes/1/BusStops/1
+        // POST: api/v1/Routes/1/BusStops/1/2
         /// <summary>
-        /// Remove a busstop from a route;
+        /// Update order to bus stop And add a bus stop to a route;
+        /// </summary>
+        /// <param name="routeId">The id of a route</param>
+        /// <param name="busStopId">The id of a stop</param>
+        /// <param name="order">Sequence number for stop</param>
+        [HttpPost]
+        [AllowAnonymous]
+        [ProducesResponseType(typeof(bool), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(BadRequestMessage), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [Route("routes/{routeId}/BusStops/{busStopId}/{order}")]
+        public IActionResult PostOrderOfBusStop(int routeId, int busStopId, int order)
+        {
+            try
+            {
+                var newRouteBusStop = new RouteBusStop { BusStopID = busStopId, RouteID = routeId, Order = order };
+                if (this._RouteBusStopRepository.SaveRouteBusStop(newRouteBusStop) > 0)
+                {
+                    return Ok(true);
+                }
+                return BadRequest(new BadRequestMessage
+                {
+                    Message = new string[] {
+                        "Sequence number fails to update.",
+                        "Tip: The bus must be already in the route.",
+                        "The bus must already exist.",
+                        "The route must already exist."
+                        }
+                });
+            }
+            catch (Exception)
+            {
+                return StatusCode(500, "Internal server error");
+            }
+        }
+
+        // Delete: api/v1/Routes/1/BusStops/1
+        /// <summary>
+        /// Remove a bus stop from a route;
         /// </summary>
         /// <param name="routeId">The id of a route</param>
         /// <param name="busStopId">The id of a stop</param>
         [HttpDelete]
         [AllowAnonymous]
+        [ProducesResponseType(typeof(bool), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(BadRequestMessage), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [Route("routes/{routeId}/BusStops/{busStopId}")]
         public IActionResult DeleteAddBusStopToRoute(int routeId, int busStopId)
         {
             try
             {
-                return Ok();
+                if (this._RouteBusStopRepository.DelRouteBusStop(routeId, busStopId) > 0)
+                {
+                    return Ok(true);
+                }
+                return BadRequest(new BadRequestMessage
+                {
+                    Message = new string[] {
+                        "The bus stop fails to remove from the route.",
+                        "Tip: The bus stop must be in the route."
+                        }
+                });
             }
             catch (Exception)
             {

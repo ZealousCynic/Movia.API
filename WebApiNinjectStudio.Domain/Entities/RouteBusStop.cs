@@ -6,6 +6,7 @@ namespace WebApiNinjectStudio.Domain.Entities
 {
     public class RouteBusStop
     {
+        public int ID { get; set; }
         public int BusStopID { get; set; }
         public BusStop BusStop { get; set; }
 
