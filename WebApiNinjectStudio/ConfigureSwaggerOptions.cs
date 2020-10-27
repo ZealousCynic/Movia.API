@@ -41,10 +41,10 @@ namespace WebApiNinjectStudio
         {
             var info = new OpenApiInfo()
             {
-                Title = "Sample API",
+                Title = "Movia RRE API",
                 Version = description.ApiVersion.ToString(),
-                Description = "A sample application with Swagger, Swashbuckle, and API versioning.",
-                Contact = new OpenApiContact() { Name = "Xi", Email = "XiPanPost@gmail.com" },
+                Description = "Movia RRE application with Swagger, Swashbuckle, and API versioning.",
+                Contact = new OpenApiContact() { Name = "Movia", Email = "Service@movia.dk" },
                 License = new OpenApiLicense() { Name = "MIT", Url = new Uri("https://opensource.org/licenses/MIT") }
             };
 

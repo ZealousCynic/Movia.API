@@ -29,4 +29,14 @@ namespace WebApiNinjectStudio.V1.Dtos
         public double Latitude { get; set; }
         public int Zone { get; set; }
     }
+    public class UpdateBusStopDto
+    {
+        [Required]
+        public string StopNumber { get; set; }
+        [Required]
+        public string Label { get; set; }
+        public double Longitude { get; set; }
+        public double Latitude { get; set; }
+        public int Zone { get; set; }
+    }
 }
