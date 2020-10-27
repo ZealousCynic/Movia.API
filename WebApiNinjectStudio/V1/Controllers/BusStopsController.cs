@@ -36,7 +36,7 @@ namespace WebApiNinjectStudio.V1.Controllers
 
         // GET: api/v1/BusStops/
         /// <summary>
-        /// Get All BusStops;
+        /// Get All bus stops;
         /// </summary>
         [HttpGet]
         [AllowAnonymous]
@@ -44,7 +44,6 @@ namespace WebApiNinjectStudio.V1.Controllers
         [ProducesResponseType(typeof(List<ReturnBusStopDto>), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(BadRequestMessage), StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        [Route("busstops")]
         public IActionResult GetBusStops([FromQuery] BusStopParameters parameters)
         {
 
@@ -87,10 +86,44 @@ namespace WebApiNinjectStudio.V1.Controllers
 
         }
 
+        // GET: api/v1/BusStops/2
+        /// <summary>
+        /// Get a bus stops by id;
+        /// </summary>
+        /// <param name="busStopId">The ID of a bus stop</param>
+        [HttpGet]
+        [AllowAnonymous]
+        [Produces("application/json")]
+        [ProducesResponseType(typeof(ReturnBusStopDto), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(BadRequestMessage), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [Route("{busStopId}")]
+        public IActionResult GetBusStopById(int busStopId)
+        {
+            var busStop = this._BusStopRepository.BusStops
+                .Where(o=> o.ID == busStopId)
+                .ToList();
+
+            if (busStop.Count > 0)
+            {
+                return Ok(this._Mapper.Map<BusStop, ReturnBusStopDto>(busStop.First()));
+            }
+
+            return BadRequest(new BadRequestMessage
+            {
+                Message = new string[] {
+                        "Find not bus stop.",
+                        "Tip: ID does not exist"
+                        }
+            });
+
+        }
+
         // POST: /​api​/v1​/BusStops​/
         /// <summary>
-        /// Create a BusStop 
+        /// Create a bus stop 
         /// </summary>
+        /// <param name="createBusStopDto">Object bus stop</param>
         [HttpPost]
         [AllowAnonymous]
         [Produces("application/json")]
@@ -131,11 +164,51 @@ namespace WebApiNinjectStudio.V1.Controllers
             }
         }
 
+        // PUT: /api/v1/BusStops/1
+        /// <summary>
+        /// Update a bus stop by id
+        /// </summary>
+        /// <param name="busStopId">The ID of a bus stop</param>
+        /// <param name="updateBusStopDto">Object bus stop</param>
+        [HttpPut]
+        [AllowAnonymous]
+        [Produces("application/json")]
+        [ProducesResponseType(typeof(ReturnBusStopDto), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(BadRequestMessage), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [Route("{busStopId}")]
+        public IActionResult Put(int busStopId, [FromBody] UpdateBusStopDto updateBusStopDto)
+        {
+            try
+            {
+                var updateBusStop = this._Mapper.Map<UpdateBusStopDto, BusStop>(updateBusStopDto);
+                updateBusStop.ID = busStopId;
+                if (this._BusStopRepository.SaveBusStop(updateBusStop) > 0)
+                {
+                    return Ok(
+                        this._Mapper.Map<BusStop, ReturnBusStopDto>(updateBusStop)
+                        );
+                }
+                return BadRequest(new BadRequestMessage
+                {
+                    Message = new string[] {
+                        "Bus stop fails to update.",
+                        "Tip: ID does not exist",
+                        "StopNumber is already exists."
+                        }
+                });
+            }
+            catch (Exception)
+            {
+                return StatusCode(500, "Internal server error");
+            }
+        }
+
         // DELETE: /v1/busstop/1
         /// <summary>
-        /// Remove the BusStop by stop id
+        /// Remove a bus stop by id
         /// </summary>
-        /// <param name="busStopId">The ID of a BusStop</param>
+        /// <param name="busStopId">The ID of a bus stop</param>
         [HttpDelete]
         [AllowAnonymous]
         [Produces("application/json")]

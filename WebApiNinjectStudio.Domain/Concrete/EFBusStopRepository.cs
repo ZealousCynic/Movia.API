@@ -33,6 +33,15 @@ namespace WebApiNinjectStudio.Domain.Concrete
             }
             else
             {
+                //Is StopNumber exist, except for itself
+                if (
+                    this._Context.BusStops
+                        .Where(o => o.StopNumber == busStop.StopNumber && o.ID != busStop.ID)
+                        .Any()
+                    )
+                {
+                    return 0;
+                }
                 var dbEntry = this._Context.BusStops.Where(o => o.ID == busStop.ID).First();
 
                 if (dbEntry != null)
@@ -41,6 +50,7 @@ namespace WebApiNinjectStudio.Domain.Concrete
                     dbEntry.StopNumber = busStop.StopNumber;
                     dbEntry.Label = busStop.Label;
                     dbEntry.Longitude = busStop.Longitude;
+                    dbEntry.Latitude = busStop.Latitude;
                     dbEntry.Zone = busStop.Zone;
                 }
             }
