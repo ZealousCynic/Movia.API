@@ -19,6 +19,13 @@ namespace WebApiNinjectStudio.V1.Dtos
         public double Latitude { get; set; }
         public int Zone { get; set; }
     }
+
+    public class ReturnBusStopWithOrderDto
+    {
+        public int Order { get; set; }
+        public ReturnBusStopDto BusStop { get; set; }
+    }
+
     public class CreateBusStopDto
     {
         [Required]
