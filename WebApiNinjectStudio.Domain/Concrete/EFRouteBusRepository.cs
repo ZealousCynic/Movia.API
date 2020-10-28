@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using Microsoft.EntityFrameworkCore;
 using WebApiNinjectStudio.Domain.Abstract;
@@ -22,12 +23,36 @@ namespace WebApiNinjectStudio.Domain.Concrete
         
         public int SaveRouteBus(RouteBus routeBus)
         {
-            return 1;
+            //Is bus,driver and route exist.
+            if (
+                (!this._Context.Busses.Where(o => o.ID == routeBus.BusID).Any())
+                ||
+                (!this._Context.Routes.Where(o => o.ID == routeBus.RouteID).Any())
+                ||
+                (!this._Context.BusDrivers.Where(o => o.ID == routeBus.BusDriverID).Any())
+                )
+            {
+                return 0;
+            }
+            //Is bus and driver is already in other route
+            if (this._Context.RouteBusses.Where(o=> o.BusDriverID == routeBus.BusDriverID || o.BusID == routeBus.BusID).Any())
+            {
+                return 0;
+            }
+            this._Context.RouteBusses.Add(routeBus);
+            return this._Context.SaveChanges();
         }
 
-        public int DelRouteBus(int routeBusId)
+        public int DelRouteBus(int routeId, int busId)
         {
-            return 1;
+            var routeBus = this._Context.RouteBusses
+                .Where(o => o.RouteID == routeId && o.BusID == busId).ToList();
+            if (routeBus.Count <= 0)
+            {
+                return 0;
+            }
+            this._Context.Remove(routeBus.First());            
+            return this._Context.SaveChanges();
         }
     }
 }

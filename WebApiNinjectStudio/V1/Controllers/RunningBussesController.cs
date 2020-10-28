@@ -72,7 +72,7 @@ namespace WebApiNinjectStudio.V1.Controllers
         [ProducesResponseType(typeof(ReturnNumberOfPassengerDto), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(BadRequestMessage), StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        [Route("runningbusses/{registrationNumber}/currentpassenger")]
+        [Route("{registrationNumber}/currentpassenger")]
         public IActionResult GetCurrentPassenger(string registrationNumber)
         {
             try
@@ -120,7 +120,7 @@ namespace WebApiNinjectStudio.V1.Controllers
         /// <param name="createNumberOfPassengerDto">Object of newest situation for passenger</param>
         [HttpPost]
         [AllowAnonymous]
-        [Route("runningbusses/{registrationNumber}/currentpassenger")]
+        [Route("{registrationNumber}/currentpassenger")]
         public IActionResult PostCurrentPassenger(string registrationNumber, [FromBody] CreateNumberOfPassengerDto createNumberOfPassengerDto)
         {
             try
@@ -165,7 +165,7 @@ namespace WebApiNinjectStudio.V1.Controllers
         [ProducesResponseType(typeof(List<ReturnNumberOfPassengerDto>), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(BadRequestMessage), StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        [Route("runningbusses/{registrationNumber}/historicalpassenger")]
+        [Route("{registrationNumber}/historicalpassenger")]
         public IActionResult HistoricalPassenger(string registrationNumber)
         {
             try

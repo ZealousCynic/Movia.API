@@ -21,4 +21,19 @@ namespace WebApiNinjectStudio.V1.Dtos
         public double Longitude { get; set; }
         public double Latitude { get; set; }
     }
+
+    public class ReturnBusAndDriverInRouteDto
+    {
+        public ReturnBusDto Bus { get; set; }
+        public ReturnBusDriverDto BusDriver { get; set; }
+        public int Status { get; set; }
+        public double Longitude { get; set; }
+        public double Latitude { get; set; }
+    }
+
+    public class BusWithDriverDto
+    {
+        public int BusID { get; set; }
+        public int BusDriverID { get; set; }
+    }
 }

@@ -29,6 +29,7 @@ namespace WebApiNinjectStudio.Domain.Concrete
             //{
             //    return 0;
             //}
+
             //Is bus and route already exist.
             if (
                 (!this._Context.BusStops.Where(o => o.ID == routeBusStop.BusStopID).Any())
