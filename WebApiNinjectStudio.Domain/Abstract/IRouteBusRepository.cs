@@ -9,6 +9,6 @@ namespace WebApiNinjectStudio.Domain.Abstract
     {
         IEnumerable<RouteBus> RouteBusses { get; }
         int SaveRouteBus(RouteBus routeBus);
-        int DelRouteBus(int routeBusId);
+        int DelRouteBus(int routeId, int busId);
     }
 }

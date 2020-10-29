@@ -34,6 +34,22 @@ namespace WebApiNinjectStudio.V1.Controllers
             this._Mapper = mapper;
         }
 
+        public IRouteBusRepository IRouteBusRepository
+        {
+            get => default;
+            set
+            {
+            }
+        }
+
+        public IBusStopRepository IBusStopRepository
+        {
+            get => default;
+            set
+            {
+            }
+        }
+
         // GET: api/v1/BusStops/
         /// <summary>
         /// Get All bus stops;
