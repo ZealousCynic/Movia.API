@@ -1,0 +1,37 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1" MembersFormat="NameAndType">
+  <Class Name="WebApiNinjectStudio.V1.Controllers.BusStopsController">
+    <Position X="1" Y="1.25" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AABAAQAAAAAAAAAAAAAAAAAAGCEABAAAACAAAAAAAQg=</HashCode>
+      <FileName>V1\Controllers\BusStopsController.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="IRouteBusRepository" />
+      <Property Name="IBusStopRepository" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="WebApiNinjectStudio.Domain.Entities.BusStop">
+    <Position X="4.25" Y="5" Width="2.5" />
+    <TypeIdentifier />
+  </Class>
+  <Class Name="WebApiNinjectStudio.Domain.Concrete.EFBusStopRepository">
+    <Position X="1.25" Y="7.25" Width="2.25" />
+    <TypeIdentifier />
+    <Lollipop Position="0.1" />
+  </Class>
+  <Class Name="WebApiNinjectStudio.Domain.Concrete.EFRouteBusRepository">
+    <Position X="1.25" Y="5" Width="2.25" />
+    <TypeIdentifier />
+    <Lollipop Position="0.355" />
+  </Class>
+  <Interface Name="WebApiNinjectStudio.Domain.Abstract.IBusStopRepository">
+    <Position X="4.75" Y="3" Width="2" />
+    <TypeIdentifier />
+  </Interface>
+  <Interface Name="WebApiNinjectStudio.Domain.Abstract.IRouteBusRepository">
+    <Position X="4.75" Y="0.75" Width="2" />
+    <TypeIdentifier />
+  </Interface>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

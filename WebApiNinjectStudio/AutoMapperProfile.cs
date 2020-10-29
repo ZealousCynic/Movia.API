@@ -36,6 +36,8 @@ namespace WebApiNinjectStudio
 
             #region Bus Dto
             CreateMap<Bus, ReturnBusDto>();
+            CreateMap<CreateBusDto, Bus>();
+            CreateMap<UpdateBusDto, Bus>();
             #endregion
 
             #region BusModel Dto
@@ -44,11 +46,15 @@ namespace WebApiNinjectStudio
 
             #region RouteBus Dto
             CreateMap<RouteBus, ReturnRouteBusDto>();
+            CreateMap<BusWithDriverDto, RouteBus>();            
+            CreateMap<RouteBus, ReturnBusAndDriverInRouteDto>();
             CreateMap<RouteBusStop, ReturnBusStopWithOrderDto>();
             #endregion
 
             #region BusDriver Dto
             CreateMap<BusDriver, ReturnBusDriverDto>();
+            CreateMap<CreateBusDriverDto, BusDriver>();
+            CreateMap<UpdateBusDriverDto, BusDriver>();
             #endregion
 
             #region BusStop Dto
