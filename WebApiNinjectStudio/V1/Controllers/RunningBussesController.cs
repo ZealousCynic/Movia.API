@@ -44,7 +44,6 @@ namespace WebApiNinjectStudio.V1.Controllers
         [ProducesResponseType(typeof(List<ReturnRouteBusDto>), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(BadRequestMessage), StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        [Route("runningbusses")]
         public IActionResult GetRunningBusses()
         {
             try
@@ -54,6 +53,42 @@ namespace WebApiNinjectStudio.V1.Controllers
                 return Ok(
                     this._Mapper.Map<List<RouteBus>, List<ReturnRouteBusDto>>(routeBusses)
                     );
+            }
+            catch (Exception)
+            {
+                return StatusCode(500, "Internal server error");
+            }
+        }
+
+        // GET: api/v1/RunningBusses/HG30202
+        /// <summary>
+        /// Get a running bus;
+        /// </summary>
+        [HttpGet]
+        [AllowAnonymous]
+        [Produces("application/json")]
+        [ProducesResponseType(typeof(ReturnRouteBusDto), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(BadRequestMessage), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [Route("{registrationNumber}")]
+        public IActionResult GetRunningBusByRegistrationNumber(string registrationNumber)
+        {
+            try
+            {
+                var bus = this._RouteBusRepository.RouteBusses
+                    .Where(o => o.Bus.RegistrationNumber.ToLower() == registrationNumber.ToLower())
+                    .ToList();
+                if (bus.Count > 0)
+                {
+                    return Ok(
+                        this._Mapper.Map<RouteBus, ReturnRouteBusDto>(bus.First())
+                        );                    
+                }
+                return BadRequest(new BadRequestMessage
+                {
+                    Message = new string[] {
+                        "Find not bus, the bus is not running"}
+                });
             }
             catch (Exception)
             {
@@ -203,6 +238,87 @@ namespace WebApiNinjectStudio.V1.Controllers
             }
         }
 
+        // POST: api/v1/RunningBusses/HG30202/status/1
+        /// <summary>
+        ///  Set the status of the bus, 1: Start up, 0: Stop
+        /// </summary>
+        /// <param name="registrationNumber">The registration number of a bus</param>
+        /// <param name="statusCode">1: Start up, 0: Stop</param>
+        [HttpPost]
+        [AllowAnonymous]
+        [Produces("application/json")]
+        [ProducesResponseType(typeof(bool), StatusCodes.Status200OK)]
+        [Route("{registrationNumber}/status/{statusCode}")]
+        public IActionResult PostSetStatusForBus(string registrationNumber, int statusCode)
+        {
+            try
+            {
+                // Get id of RouteBus
+                var routeBusses = this._RouteBusRepository.RouteBusses.Where(o => o.Bus.RegistrationNumber == registrationNumber).ToList();
+                if (routeBusses.Count > 0)
+                {
+                    var routeBus = routeBusses.First();
 
+                    routeBus.Status = statusCode > 0 ? 1 : 0;
+
+                    if (this._RouteBusRepository.SaveRouteBus(routeBus) > 0)
+                    {
+                        return Ok(true);
+                    }
+                }
+                return BadRequest(new BadRequestMessage
+                {
+                    Message = new string[] {
+                        "Status for the bus fails to update.",
+                        "Tip: Find not bus, the bus is not running"
+                    }
+                });
+            }
+            catch (Exception)
+            {
+                return StatusCode(500, "Internal server error");
+            }
+        }
+
+        // POST: api/v1/RunningBusses/HG30202/gps/1
+        /// <summary>
+        ///  Set the gps point of the bus
+        /// </summary>
+        /// <param name="registrationNumber">The registration number of a bus</param>
+        /// <param name="gpsPoint">The current GPS location of the bus</param>
+        [HttpPost]
+        [AllowAnonymous]
+        [Produces("application/json")]
+        [ProducesResponseType(typeof(bool), StatusCodes.Status200OK)]
+        [Route("{registrationNumber}/gps")]
+        public IActionResult PostSetGpsPointForBus(string registrationNumber, BusGpsPoint gpsPoint)
+        {
+            try
+            {
+                // Get id of RouteBus
+                var routeBusses = this._RouteBusRepository.RouteBusses.Where(o => o.Bus.RegistrationNumber == registrationNumber).ToList();
+                if (routeBusses.Count > 0)
+                {
+                    var routeBus = routeBusses.First();
+                    routeBus.Latitude = gpsPoint.Latitude;
+                    routeBus.Longitude = gpsPoint.Longitude;
+                    if (this._RouteBusRepository.SaveRouteBus(routeBus) > 0)
+                    {
+                        return Ok(true);
+                    }
+                }
+                return BadRequest(new BadRequestMessage
+                {
+                    Message = new string[] {
+                        "Gps point for the bus fails to update.",
+                        "Tip: Find not bus, the bus is not running"
+                    }
+                });
+            }
+            catch (Exception)
+            {
+                return StatusCode(500, "Internal server error");
+            }
+        }
     }
 }

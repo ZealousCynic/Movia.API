@@ -34,12 +34,35 @@ namespace WebApiNinjectStudio.Domain.Concrete
             {
                 return 0;
             }
-            //Is bus and driver is already in other route
-            if (this._Context.RouteBusses.Where(o=> o.BusDriverID == routeBus.BusDriverID || o.BusID == routeBus.BusID).Any())
+
+            if(routeBus.ID == 0)
             {
-                return 0;
+                //Is bus and driver is already in other route
+                if (this._Context.RouteBusses.Where(o => o.BusDriverID == routeBus.BusDriverID || o.BusID == routeBus.BusID).Any())
+                {
+                    return 0;
+                }
+                this._Context.RouteBusses.Add(routeBus);
             }
-            this._Context.RouteBusses.Add(routeBus);
+            else
+            {
+                var routeBusses = this._Context.RouteBusses
+                    .Where(o => o.ID == routeBus.ID).ToList();
+                if (routeBusses.Count <= 0)
+                {
+                    return 0;
+                }
+                var dbEntry = routeBusses.First();
+                if (dbEntry != null)
+                {
+                    dbEntry.RouteID = routeBus.RouteID;
+                    dbEntry.BusID = routeBus.BusID;
+                    dbEntry.BusDriverID = routeBus.BusDriverID;
+                    dbEntry.Status = routeBus.Status;
+                    dbEntry.Longitude = routeBus.Longitude;
+                    dbEntry.Latitude = routeBus.Latitude;
+                }
+            }
             return this._Context.SaveChanges();
         }
 

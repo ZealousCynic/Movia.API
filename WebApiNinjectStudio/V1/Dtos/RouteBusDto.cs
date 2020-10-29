@@ -36,4 +36,12 @@ namespace WebApiNinjectStudio.V1.Dtos
         public int BusID { get; set; }
         public int BusDriverID { get; set; }
     }
+
+    public class BusGpsPoint
+    {
+        [Required]
+        public double Longitude { get; set; }
+        [Required]
+        public double Latitude { get; set; }
+    }
 }
