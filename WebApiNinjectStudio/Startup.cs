@@ -262,7 +262,8 @@ namespace WebApiNinjectStudio
             app.UseCors(x => x
                 .AllowAnyOrigin()
                 .AllowAnyMethod()
-                .AllowAnyHeader());
+                .AllowAnyHeader()
+                .WithExposedHeaders("x-pagination"));
 
             app.UseAuthentication();
             app.UseAuthorization();
