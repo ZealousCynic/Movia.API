@@ -48,7 +48,17 @@ namespace WebApiNinjectStudio.Domain.Concrete
 
         public int DelRoute(int routeId)
         {
-            return 0;
+            var routes = this._Context.Routes
+                .Include(o => o.RouteBusStops)
+                .Include(o => o.RouteBusses).ThenInclude(o => o.NumberOfPassengers)
+                .Where(o => o.ID == routeId)
+                .ToList();
+            if (routes.Count <= 0)
+            {
+                return 0;
+            }
+            this._Context.Remove(routes.First());
+            return this._Context.SaveChanges();
         }
     }
 }
