@@ -51,6 +51,8 @@ namespace WebApiNinjectStudio.Domain.Concrete
             if (isNew)
             {
                 this._Context.RouteBusStops.Add(routeBusStop);
+                this._Context.SaveChanges();
+                return 1;
             }
             else
             {
@@ -61,9 +63,11 @@ namespace WebApiNinjectStudio.Domain.Concrete
                     dbEntry.BusStopID = routeBusStop.BusStopID;
                     dbEntry.RouteID = routeBusStop.RouteID;
                     dbEntry.Order = routeBusStop.Order;
+                    this._Context.SaveChanges();
+                    return 1;
                 }
             }
-            return this._Context.SaveChanges();
+            return 0;
         }
 
         public int DelRouteBusStop(int routeId, int busStopId)

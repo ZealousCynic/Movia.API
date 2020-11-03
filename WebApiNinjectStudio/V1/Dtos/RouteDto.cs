@@ -17,6 +17,13 @@ namespace WebApiNinjectStudio.V1.Dtos
         [Required]
         public string Description { get; set; }
     }
+    public class UpdateRouteDto
+    {
+        [Required]
+        public string Label { get; set; }
+        [Required]
+        public string Description { get; set; }
+    }
     public class ReturnRouteDto
     {
         public int ID { get; set; }

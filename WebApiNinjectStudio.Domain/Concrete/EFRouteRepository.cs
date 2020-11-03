@@ -24,19 +24,26 @@ namespace WebApiNinjectStudio.Domain.Concrete
             if (route.ID == 0)
             {
                 this._Context.Routes.Add(route);
+                this._Context.SaveChanges();
+                return 1;
             }
             else
             {
-                var dbEntry = this._Context.Routes.Where(o => o.ID == route.ID).First();
-
-                if (dbEntry != null)
+                var routeItem = this._Context.Routes.Where(o => o.ID == route.ID).ToList();
+                if (routeItem.Count > 0)
                 {
-                    dbEntry.ID = route.ID;
-                    dbEntry.Label = route.Label;
-                    dbEntry.Description = route.Description;
+                    var dbEntry = routeItem.First();
+                    if (dbEntry != null)
+                    {
+                        dbEntry.Label = route.Label;
+                        dbEntry.Description = route.Description;
+
+                        this._Context.SaveChanges();
+                        return 1;
+                    }
                 }
             }
-            return this._Context.SaveChanges();
+            return 0;
         }
 
         public int DelRoute(int routeId)

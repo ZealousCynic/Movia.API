@@ -96,6 +96,48 @@ namespace WebApiNinjectStudio.V1.Controllers
             }
         }
 
+        // PUT: /v1/Routes/1
+        /// <summary>
+        /// Update the route by id
+        /// </summary>
+        /// <param name="routeId">The ID of route</param>
+        /// <param name="updateRouteDto">Object route</param>
+        [HttpPut]
+        [AllowAnonymous]
+        [Produces("application/json")]
+        [ProducesResponseType(typeof(ReturnProductDto), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(BadRequestMessage), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [Route("{routeId}")]
+        public IActionResult Put(int routeId, [FromBody] UpdateRouteDto updateRouteDto)
+        {
+            //try
+            {
+                var updateRoute = this._Mapper.Map<UpdateRouteDto, Route>(updateRouteDto);
+                updateRoute.ID = routeId;
+                if (this._RouteRepository.SaveRoute(updateRoute) > 0)
+                {
+                    return Ok(
+                        this._Mapper.Map<Route, ReturnRouteDto>(updateRoute)
+                        );
+                }
+                else
+                {
+                    return BadRequest(new BadRequestMessage
+                    {
+                        Message = new string[] {
+                            "Route fails to update.",
+                            "ID does not exist"
+                        }
+                    });
+                }
+            }
+            //catch (Exception)
+            //{
+            //    return StatusCode(500, "Internal server error");
+            //}
+        }
+
         // POST: /​api​/v1​/Routes​/
         /// <summary>
         /// Create a route 
