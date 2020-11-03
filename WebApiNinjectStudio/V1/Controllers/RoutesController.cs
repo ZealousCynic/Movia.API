@@ -191,6 +191,39 @@ namespace WebApiNinjectStudio.V1.Controllers
             }
         }
 
+        // Delete: api/v1/Routes/1/
+        /// <summary>
+        /// Remove a route;
+        /// </summary>
+        /// <param name="routeId">The id of a route</param>
+        [HttpDelete]
+        [AllowAnonymous]
+        [ProducesResponseType(typeof(bool), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(BadRequestMessage), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [Route("{routeId}")]
+        public IActionResult DeleteRoute(int routeId)
+        {
+            try
+            {
+                if (this._RouteRepository.DelRoute(routeId) > 0)
+                {
+                    return Ok(true);
+                }
+                return BadRequest(new BadRequestMessage
+                {
+                    Message = new string[] {
+                        "The route fails to remove.",
+                        "Tip: The route must be existed."
+                        }
+                });
+            }
+            catch (Exception)
+            {
+                return StatusCode(500, "Internal server error");
+            }
+        }
+
         // GET: api/v1/Routes/1/BusStops
         /// <summary>
         /// Get all bus stops of a route by id;
