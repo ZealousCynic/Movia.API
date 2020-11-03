@@ -71,6 +71,7 @@ namespace WebApiNinjectStudio
             #region Route Dto
             CreateMap<Route, ReturnRouteDto>();
             CreateMap<CreateRouteDto, Route>();
+            CreateMap<UpdateRouteDto, Route>();
             #endregion
         }
     }

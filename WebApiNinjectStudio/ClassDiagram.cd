@@ -1,36 +1,160 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ClassDiagram MajorVersion="1" MinorVersion="1" MembersFormat="NameAndType">
   <Class Name="WebApiNinjectStudio.V1.Controllers.BusStopsController">
-    <Position X="1" Y="1.25" Width="2.5" />
+    <Position X="0.5" Y="0.5" Width="2.5" />
     <TypeIdentifier>
-      <HashCode>AABAAQAAAAAAAAAAAAAAAAAAGCEABAAAACAAAAAAAQg=</HashCode>
+      <HashCode>AABAAQAAAAAAAAAAAAAAAAAACCEAAAAAACAAAAAAAQg=</HashCode>
       <FileName>V1\Controllers\BusStopsController.cs</FileName>
     </TypeIdentifier>
-    <ShowAsAssociation>
-      <Property Name="IRouteBusRepository" />
-      <Property Name="IBusStopRepository" />
-    </ShowAsAssociation>
   </Class>
   <Class Name="WebApiNinjectStudio.Domain.Entities.BusStop">
-    <Position X="4.25" Y="5" Width="2.5" />
+    <Position X="6.5" Y="16.5" Width="2.5" />
     <TypeIdentifier />
   </Class>
   <Class Name="WebApiNinjectStudio.Domain.Concrete.EFBusStopRepository">
-    <Position X="1.25" Y="7.25" Width="2.25" />
+    <Position X="18.5" Y="7.75" Width="2.25" />
     <TypeIdentifier />
     <Lollipop Position="0.1" />
   </Class>
   <Class Name="WebApiNinjectStudio.Domain.Concrete.EFRouteBusRepository">
-    <Position X="1.25" Y="5" Width="2.25" />
+    <Position X="3.25" Y="0.75" Width="2.25" />
     <TypeIdentifier />
     <Lollipop Position="0.355" />
   </Class>
+  <Class Name="WebApiNinjectStudio.V1.Controllers.BussesController">
+    <Position X="6" Y="0.5" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AAgAAAAAAAAAAAAAAAAAAgAACEEAAAAAAAAAAAAAASg=</HashCode>
+      <FileName>V1\Controllers\BussesController.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="WebApiNinjectStudio.Domain.Concrete.EFBusRepository">
+    <Position X="25" Y="3" Width="2" />
+    <TypeIdentifier />
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="WebApiNinjectStudio.Domain.Entities.Bus">
+    <Position X="6.25" Y="22.25" Width="2.25" />
+    <TypeIdentifier />
+    <ShowAsAssociation>
+      <Property Name="BusModel" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="WebApiNinjectStudio.Domain.Entities.BusModel">
+    <Position X="9.5" Y="22.25" Width="2" />
+    <TypeIdentifier />
+  </Class>
+  <Class Name="WebApiNinjectStudio.V1.Controllers.BusDriversController">
+    <Position X="18.5" Y="11.25" Width="3.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAABAAAEAAAAAIAAAAAAACAEAAAAAAAAAAAAAASg=</HashCode>
+      <FileName>V1\Controllers\BusDriversController.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="IBusDriverRepository" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="WebApiNinjectStudio.Domain.Concrete.EFBusDriverRepository">
+    <Position X="23.5" Y="13.25" Width="2.25" />
+    <TypeIdentifier />
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="WebApiNinjectStudio.Domain.Entities.BusDriver">
+    <Position X="6.25" Y="25.25" Width="2.25" />
+    <TypeIdentifier />
+  </Class>
+  <Class Name="WebApiNinjectStudio.V1.Controllers.RoutesController">
+    <Position X="20.5" Y="1" Width="3.75" />
+    <AssociationLine Name="IRouteBusStopRepository" Type="WebApiNinjectStudio.Domain.Abstract.IRouteBusStopRepository" FixedToPoint="true">
+      <Path>
+        <Point X="20.5" Y="1.312" />
+        <Point X="20" Y="1.312" />
+      </Path>
+    </AssociationLine>
+    <AssociationLine Name="IRouteRepository" Type="WebApiNinjectStudio.Domain.Abstract.IRouteRepository" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="22.781" Y="5.569" />
+        <Point X="22.781" Y="6.25" />
+        <Point X="24" Y="6.25" />
+      </Path>
+    </AssociationLine>
+    <AssociationLine Name="IBusStopRepository" Type="WebApiNinjectStudio.Domain.Abstract.IBusStopRepository" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="21.641" Y="5.569" />
+        <Point X="21.641" Y="6.125" />
+        <Point X="20.5" Y="6.125" />
+      </Path>
+    </AssociationLine>
+    <AssociationLine Name="IRouteBusRepository" Type="WebApiNinjectStudio.Domain.Abstract.IRouteBusRepository" FixedToPoint="true">
+      <Path>
+        <Point X="24.25" Y="1.438" />
+        <Point X="25" Y="1.438" />
+      </Path>
+    </AssociationLine>
+    <TypeIdentifier>
+      <HashCode>ABBgQQAAAIAAAEAAAAIAgAAAGABCBAAAAACIgAAgAQg=</HashCode>
+      <FileName>V1\Controllers\RoutesController.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="IRouteBusStopRepository" />
+      <Property Name="IRouteRepository" />
+      <Property Name="IBusStopRepository" />
+      <Property Name="IRouteBusRepository" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="WebApiNinjectStudio.Domain.Concrete.EFRouteBusStopRepository">
+    <Position X="17.75" Y="3" Width="2.5" />
+    <TypeIdentifier />
+    <Lollipop Position="0.1" />
+  </Class>
+  <Class Name="WebApiNinjectStudio.Domain.Concrete.EFRouteRepository">
+    <Position X="24" Y="7.75" Width="2" />
+    <TypeIdentifier />
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="WebApiNinjectStudio.Domain.Entities.RouteBus">
+    <Position X="2.5" Y="22.25" Width="2.75" />
+    <TypeIdentifier />
+    <ShowAsAssociation>
+      <Property Name="Bus" />
+      <Property Name="BusDriver" />
+      <Property Name="Route" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="WebApiNinjectStudio.Domain.Entities.Route">
+    <Position X="2.5" Y="19.25" Width="2.75" />
+    <TypeIdentifier />
+  </Class>
+  <Class Name="WebApiNinjectStudio.Domain.Entities.RouteBusStop">
+    <Position X="2.5" Y="16.5" Width="2.75" />
+    <TypeIdentifier />
+    <ShowAsAssociation>
+      <Property Name="BusStop" />
+      <Property Name="Route" />
+    </ShowAsAssociation>
+  </Class>
   <Interface Name="WebApiNinjectStudio.Domain.Abstract.IBusStopRepository">
-    <Position X="4.75" Y="3" Width="2" />
+    <Position X="18.5" Y="5.75" Width="2" />
     <TypeIdentifier />
   </Interface>
   <Interface Name="WebApiNinjectStudio.Domain.Abstract.IRouteBusRepository">
-    <Position X="4.75" Y="0.75" Width="2" />
+    <Position X="25" Y="1" Width="2" />
+    <TypeIdentifier />
+  </Interface>
+  <Interface Name="WebApiNinjectStudio.Domain.Abstract.IBusRepository">
+    <Position X="8.75" Y="0.5" Width="2" />
+    <TypeIdentifier />
+  </Interface>
+  <Interface Name="WebApiNinjectStudio.Domain.Abstract.IBusDriverRepository">
+    <Position X="23.5" Y="11.25" Width="2.25" />
+    <TypeIdentifier />
+  </Interface>
+  <Interface Name="WebApiNinjectStudio.Domain.Abstract.IRouteRepository">
+    <Position X="24" Y="5.75" Width="2" />
+    <TypeIdentifier />
+  </Interface>
+  <Interface Name="WebApiNinjectStudio.Domain.Abstract.IRouteBusStopRepository">
+    <Position X="17.75" Y="1" Width="2.25" />
     <TypeIdentifier />
   </Interface>
   <Font Name="Segoe UI" Size="9" />

@@ -10,7 +10,7 @@ namespace WebApiNinjectStudio.Domain.Filter
         [EmailAddress]
         public string Email { get; set; }
 
-        private const int MaxPageSize = 25;
+        private const int MaxPageSize = 250;
 
         [RegularExpression(@"^[1-9]\d*$", ErrorMessage = "The field PageNumber must be more than 0")]
         public int PageNumber { get; set; } = 1;
