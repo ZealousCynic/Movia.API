@@ -36,7 +36,7 @@ namespace WebApiNinjectStudio.V1.Controllers
 
         // GET: api/v1/RunningBusses/
         /// <summary>
-        /// Get All running busses;
+        /// Get All running busses; 
         /// </summary>
         [HttpGet]
         [AllowAnonymous]
@@ -149,7 +149,7 @@ namespace WebApiNinjectStudio.V1.Controllers
 
         // POST: api/v1/RunningBusses/HG30202/currentpassenger
         /// <summary>
-        /// Create newest situation for passenger after RegistrationNumber
+        /// Create newest situation for passenger after RegistrationNumber, the bus must be active(status = 1)
         /// </summary>
         /// <param name="registrationNumber">The registration number of a bus</param>
         /// <param name="createNumberOfPassengerDto">Object of newest situation for passenger</param>
