@@ -170,7 +170,7 @@ namespace WebApiNinjectStudio.V1.Controllers
         [Route("{busDriverId}")]
         public IActionResult Put(int busDriverId, [FromBody] UpdateBusDriverDto updateBusDriverDto)
         {
-            //try
+            try
             {
                 var updateBusDriver = this._Mapper.Map<UpdateBusDriverDto, BusDriver>(updateBusDriverDto);
                 updateBusDriver.ID = busDriverId;
@@ -190,10 +190,10 @@ namespace WebApiNinjectStudio.V1.Controllers
                         }
                 });
             }
-            //catch (Exception)
-            //{
-            //    return StatusCode(500, "Internal server error");
-            //}
+            catch (Exception)
+            {
+                return StatusCode(500, "Internal server error");
+            }
         }
 
         // DELETE: /v1/busdrivers/1

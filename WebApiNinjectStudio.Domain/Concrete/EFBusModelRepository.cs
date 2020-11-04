@@ -57,12 +57,13 @@ namespace WebApiNinjectStudio.Domain.Concrete
             var busses = this._Context.Busses
                 .Where(o => o.BusModel.ID == busModelId)
                 .ToList();
-            if (busses.Count <= 0)
+            if (busses.Count > 0)
             {
                 return 0;
             }
 
-            var busModels = this._Context.BusModels.Where(o => o.ID == busModelId).ToList();
+            var busModels = this._Context.BusModels
+                       .Where(o => o.ID == busModelId).ToList();
             if (busModels.Count <= 0)
             {
                 return 0;

@@ -78,6 +78,7 @@ namespace WebApiNinjectStudio
             services.AddScoped<IBusRepository, EFBusRepository>();
             services.AddScoped<IBusDriverRepository, EFBusDriverRepository>();
             services.AddScoped<IRouteBusRepository, EFRouteBusRepository>();
+            services.AddScoped<IBusModelRepository, EFBusModelRepository>();
 
 
             services.AddScoped<EFUserDetailRepository>();
