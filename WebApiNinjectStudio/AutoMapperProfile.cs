@@ -42,6 +42,8 @@ namespace WebApiNinjectStudio
 
             #region BusModel Dto
             CreateMap<BusModel, ReturnBusModelDto>();
+            CreateMap<CreateBusModelDto, BusModel>();
+            CreateMap<UpdateBusModelDto, BusModel>();
             #endregion
 
             #region RouteBus Dto
