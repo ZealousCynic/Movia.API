@@ -1,30 +1,16 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using WebApiNinjectStudio.Services;
 using WebApiNinjectStudio.V1.Dtos;
 using WebApiNinjectStudio.Domain.Concrete;
-using Microsoft.AspNetCore.Authorization;
 using WebApiNinjectStudio.Domain.Abstract;
-using WebApiNinjectStudio.Domain.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using Moq;
 using WebApiNinjectStudio.V1.Controllers;
-using WebApiNinjectStudio.V1.Dtos;
-using WebApiNinjectStudio.Domain.Abstract;
 using Xunit;
 using AutoMapper;
 using Microsoft.EntityFrameworkCore;
-using WebApiNinjectStudio.Domain.Concrete;
 using WebApiNinjectStudio.Domain.Filter;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
 using WebApiNinjectStudio.UnitTests.Extension;
 
 namespace WebApiNinjectStudio.UnitTests.V1.Controllers
@@ -157,6 +143,12 @@ namespace WebApiNinjectStudio.UnitTests.V1.Controllers
 
             result = target.Delete(13);
             var badResult = result as BadRequestObjectResult;
+            Assert.Equal(400, badResult.StatusCode);
+            Assert.Equal(12, this._EFBusDriverRepository.BusDrivers.Count());
+
+            //Can't delete the bus driver which is in route
+            result = target.Delete(1);
+            badResult = result as BadRequestObjectResult;
             Assert.Equal(400, badResult.StatusCode);
             Assert.Equal(12, this._EFBusDriverRepository.BusDrivers.Count());
         }
