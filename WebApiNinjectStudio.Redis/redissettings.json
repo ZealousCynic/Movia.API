@@ -1,6 +1,7 @@
 {
-  "ConnectionStrings": {    
-    "DBContext": "Data Source=.;Initial Catalog=NetCoreApiArchitecture;User ID=banksystem;Password=banksystem"
+  "ConnectionStrings": {
+    "DBContext": "Data Source=.;Initial Catalog=Movia;User ID=banksystem;Password=banksystem"
+    //"DBContext": "Data Source=1.tcp.eu.ngrok.io,28550\\.;Initial Catalog=Movia;User ID=sa;Password=Pa$$w0rd"
   },
   "Redis": {
     //"Password": "uefEgw=",
@@ -11,7 +12,7 @@
     "Database": 0,
     "Hosts": [
       {
-        "Host": "localhost",
+        "Host": "localhost", //192.168.10.155
         "Port": "6379"
       }
     ]

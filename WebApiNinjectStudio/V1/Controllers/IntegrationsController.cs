@@ -45,12 +45,24 @@ namespace WebApiNinjectStudio.V1.Controllers
             {
                 login.Password = this._Pbkdf2Security.HashPassword(login.Password);
                 var jwtToken = this._AccountService.GetToken(login.Email, login.Password);
-                if (jwtToken == null)
+                var user = this._AccountService.GetUserInfo(login.Email, login.Password);
+                if (jwtToken == null || user == null)
                 {
-                    //return Unauthorized();
-                    return BadRequest(new { Message = "Account does not exist" });
+                    //return Unauthorized();                    
+                    return BadRequest(new BadRequestMessage
+                    {
+                        Message = new string[] {
+                        "Account does not exist"}
+                    });
                 }
-                return Ok(new ReturnTokenDto { Token = jwtToken });
+                return Ok(new ReturnTokenDto
+                {
+                    UserID = user.UserID,
+                    FirstName = user.FirstName,
+                    LastName = user.LastName,
+                    Email = user.Email,
+                    Token = jwtToken
+                });
             }
             catch (Exception)
             {
