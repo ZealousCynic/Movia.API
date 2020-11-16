@@ -24,12 +24,15 @@ namespace WebApiNinjectStudio.V1.Controllers
     public class RunningBussesController : ControllerBase
     {
         private readonly IRouteBusRepository _RouteBusRepository;
+        private readonly IRouteBusRepository _RedisRouteBusRepository;
         private readonly INumberOfPassengerRepository _NumberOfPassengerRepository;
         private readonly IMapper _Mapper;
 
-        public RunningBussesController(IRouteBusRepository routeBusRepository, INumberOfPassengerRepository numberOfPassengerRepository, IMapper mapper)
-        {
-            this._RouteBusRepository = routeBusRepository;
+        public RunningBussesController(RouteBusFactory routeBusFactory,  INumberOfPassengerRepository numberOfPassengerRepository, IMapper mapper)
+        {            
+            this._RouteBusRepository = routeBusFactory(RouteBusRepositoryType.EF);
+            this._RedisRouteBusRepository = routeBusFactory(RouteBusRepositoryType.Redis);
+
             this._NumberOfPassengerRepository = numberOfPassengerRepository;
             this._Mapper = mapper;
         }
@@ -50,6 +53,32 @@ namespace WebApiNinjectStudio.V1.Controllers
             {
                 var routeBusses = this._RouteBusRepository.RouteBusses
                     .Where(o => o.Status == 1).ToList(); 
+                return Ok(
+                    this._Mapper.Map<List<RouteBus>, List<ReturnRouteBusDto>>(routeBusses)
+                    );
+            }
+            catch (Exception)
+            {
+                return StatusCode(500, "Internal server error");
+            }
+        }
+
+        // GET: api/v1/RunningBussesWithCache/
+        /// <summary>
+        /// Get All running busses from cache; 
+        /// </summary>
+        [HttpGet]
+        [AllowAnonymous]
+        [Produces("application/json")]
+        [ProducesResponseType(typeof(List<ReturnRouteBusDto>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(BadRequestMessage), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [Route("cache")]
+        public IActionResult GetRunningBussesWithCache()
+        {
+            try
+            {
+                var routeBusses = this._RedisRouteBusRepository.RouteBusses.ToList();
                 return Ok(
                     this._Mapper.Map<List<RouteBus>, List<ReturnRouteBusDto>>(routeBusses)
                     );

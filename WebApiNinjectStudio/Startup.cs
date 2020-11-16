@@ -76,9 +76,10 @@ namespace WebApiNinjectStudio
             services.AddScoped<IRouteBusStopRepository, EFRouteBusStopRepository>();
             services.AddScoped<IBusStopRepository, EFBusStopRepository>();
             services.AddScoped<IBusRepository, EFBusRepository>();
-            services.AddScoped<IBusDriverRepository, EFBusDriverRepository>();
-            services.AddScoped<IRouteBusRepository, EFRouteBusRepository>();
+            services.AddScoped<IBusDriverRepository, EFBusDriverRepository>();            
             services.AddScoped<IBusModelRepository, EFBusModelRepository>();
+
+            //services.AddScoped<IRouteBusRepository, EFRouteBusRepository>();
 
 
             services.AddScoped<EFUserDetailRepository>();
@@ -91,6 +92,21 @@ namespace WebApiNinjectStudio
                         return serviceProvider.GetService<EFUserDetailRepository>();
                     case UserDetailRepositoryType.Redis:
                         return serviceProvider.GetService<RedisUserDetailRepository>();
+                    default:
+                        throw new KeyNotFoundException();
+                }
+            });
+
+            services.AddScoped<EFRouteBusRepository>();
+            services.AddScoped<RedisRouteBusRepository>();
+            services.AddTransient<RouteBusFactory>(serviceProvider => routeBusRepositoryType =>
+            {
+                switch (routeBusRepositoryType)
+                {
+                    case RouteBusRepositoryType.EF:
+                        return serviceProvider.GetService<EFRouteBusRepository>();
+                    case RouteBusRepositoryType.Redis:
+                        return serviceProvider.GetService<RedisRouteBusRepository>();
                     default:
                         throw new KeyNotFoundException();
                 }

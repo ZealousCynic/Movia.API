@@ -19,31 +19,63 @@ namespace WebApiNinjectStudio.Redis
 
         private static async System.Threading.Tasks.Task Main(string[] args)
         {
-
-            Startup();
+            Console.WriteLine("System initializing. . .");
+            Startup();            
 
             var odp = _ServiceProvider.GetService<IProductRepository>();
-
             var userDetailFactory = _ServiceProvider.GetService<UserDetailFactory>();
             var redisUserDetailRepositoryType = userDetailFactory(UserDetailRepositoryType.Redis);
             var efUserDetailRepositoryType = userDetailFactory(UserDetailRepositoryType.EF);
 
-            var cacheHandle= _ServiceProvider.GetService<CacheInit>();            
+            var cacheHandle= _ServiceProvider.GetService<CacheInit>();
 
-            var userDetails = efUserDetailRepositoryType.UserDetails.ToList();
-            Console.Clear();
-            Console.WriteLine(string.Format("{0} records of UserDetail have been found", userDetails.Count.ToString()));
-            Console.WriteLine("Press enter to creat cache. . .");
+            var routeBusRepository = _ServiceProvider.GetService<IRouteBusRepository>();
+
+            //Console.Clear();
+            #region userDetails
+            //var userDetails = efUserDetailRepositoryType.UserDetails.ToList();
+            //Console.WriteLine(string.Format("{0} records of UserDetail have been found", userDetails.Count.ToString()));
+            //Console.WriteLine("Press enter to creat cache. . .");
+            //Console.ReadLine();
+            //var skip = 0;
+            //var take = 20;
+            //while (skip < userDetails.Count())
+            //{
+            //    var subOfUserDetails = userDetails.Skip(skip).Take(take).ToList();
+            //    skip += take;
+            //    cacheHandle.CreateUserDetailRedisCache(subOfUserDetails);
+            //    Console.Write($"\r {skip} records has been created...");
+            //}
+            #endregion
+
+            
+
             Console.ReadLine();
-            var skip = 0;
-            var take = 20;
-            while (skip < userDetails.Count())
-            {
-                var subOfUserDetails = userDetails.Skip(skip).Take(take).ToList();
-                skip += take;
-                cacheHandle.CreateUserDetailRedisCache(subOfUserDetails);
-                Console.Write($"\r {skip} records has been created...");
-            }
+            cacheHandle.FlushDb();
+
+            //Create routebus cache
+            var routeBusses = routeBusRepository.RouteBusses.Where(o => o.Status == 1).ToList();
+            Console.WriteLine(string.Format("{0} records of RouteBusses have been found", routeBusses.Count.ToString()));
+            Console.WriteLine("Press enter to creat cache. . .");
+            cacheHandle.CreateRunningBussesRedisCache(routeBusses);
+
+            //Create bus cache
+            var busses = routeBusRepository.RouteBusses.Where(o => o.Status == 1).Select(o => o.Bus).ToList();
+            cacheHandle.CreateBusRedisCache(busses);
+
+            //Create bus model cache
+            var busModels = routeBusRepository.RouteBusses.Where(o => o.Status == 1).Select(o => o.Bus.BusModel).ToList();
+            cacheHandle.CreateBusModelRedisCache(busModels);
+
+            //Create bus driver cache
+            var busDrivers = routeBusRepository.RouteBusses.Where(o => o.Status == 1).Select(o => o.BusDriver).ToList();
+            cacheHandle.CreateBusDriverRedisCache(busDrivers);
+
+
+            Console.Write($"\r {routeBusses.Count} records has been created...");
+
+            //var xxx = await cacheHandle.TestRead();
+
             DisposeServices();
             Console.WriteLine("END");
         }
@@ -57,6 +89,7 @@ namespace WebApiNinjectStudio.Redis
 
             _ServiceProvider = new ServiceCollection()
                 .AddScoped<IProductRepository, EFProductRepository>()
+                .AddScoped<IRouteBusRepository, EFRouteBusRepository>()
                 .AddScoped<EFUserDetailRepository>()
                 .AddScoped<RedisUserDetailRepository>()
                 .AddScoped<CacheInit>()

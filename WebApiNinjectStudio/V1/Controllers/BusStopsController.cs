@@ -101,7 +101,7 @@ namespace WebApiNinjectStudio.V1.Controllers
         public IActionResult GetBusStopById(int busStopId)
         {
             var busStop = this._BusStopRepository.BusStops
-                .Where(o=> o.ID == busStopId)
+                .Where(o => o.ID == busStopId)
                 .ToList();
 
             if (busStop.Count > 0)
