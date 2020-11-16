@@ -7,6 +7,7 @@ using System.Text;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using WebApiNinjectStudio.Domain.Abstract;
+using WebApiNinjectStudio.Domain.Entities;
 
 namespace WebApiNinjectStudio.Services
 {
@@ -25,6 +26,17 @@ namespace WebApiNinjectStudio.Services
             this._AuthPolicyRequirement = authPolicyRequirement;
         }
 
+        public User GetUserInfo(string email, string password)
+        {
+            var user = this._Repository.Users.FirstOrDefault(u => u.Email == email && u.Password == password);
+
+            if (user == null)
+            {
+                return null;
+            }
+
+            return user;
+        }
         public string GetToken(string email, string password)
         {
             var user = this._Repository.Users.FirstOrDefault(u => u.Email == email && u.Password == password);
