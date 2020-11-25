@@ -7,9 +7,6 @@ namespace WebApiNinjectStudio.Domain.Migrations
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            // Password plain text:
-            // john4242
-
             migrationBuilder.InsertData(
                 table: "Users",
                 columns: new[] { "UserID", "Email", "FirstName", "IsDeleted", "LastName", "Password", "PhoneNumber", "RoleID" },
