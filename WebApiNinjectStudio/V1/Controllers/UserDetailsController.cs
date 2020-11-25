@@ -63,7 +63,7 @@ namespace WebApiNinjectStudio.V1.Controllers
         /// Get info about userdetail by username and password with database
         /// </summary>
         [HttpGet]
-        [AllowAnonymous]
+        [Authorize(Roles = "Administrator")]
         [Produces("application/json")]
         [Route("GetUserDetailWithDB")]
         public async Task<IActionResult> GetUserDetailByDB(string userName, string password)
